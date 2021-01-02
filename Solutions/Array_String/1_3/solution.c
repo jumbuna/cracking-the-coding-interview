@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <sys/_types/_size_t.h>
 
 
 /**
@@ -58,6 +59,33 @@ void removeDuplicateCharacters_Brute(char *str) {
      str[tail] = 0;
  }
 
+ /**
+ * Linear solution
+ *
+ * Time Complexity:     O(n)
+ * Space Complexity:    O(n)
+ */
+ void removeDuplicateCharacters_Linear( char *str) {
+     /* Length of String */
+     size_t len = strlen(str);
+     /* boolean array indexed using ascii symbols */
+     /* implicit initialization of all values to 0 */
+     short arr[256] = {0};
+    //  for(int i = 0; i < 256; i++) {
+    //      arr[i] = 0;
+    //  }
+     /* index for next non duplicate character */
+     int tail = 0;
+     for(int i = 0; i < len; i++) {
+         if(arr[str[i]] == 0) {
+             str[tail] = str[i];
+             tail++;
+             arr[str[i]] = 1;
+         }
+     }
+     str[tail] = 0;
+ }
+
 int main(int argc, char **argv) {
     if(argc < 2) {
         printf("Usage: %s str1 str2 ...\n", argv[0]);
@@ -65,7 +93,7 @@ int main(int argc, char **argv) {
     }
     for(int i = 1; i < argc; i++) {
         char *t = strdup(argv[i]);
-        removeDuplicateCharacters_Brute2(argv[i]);
+        removeDuplicateCharacters_Linear(argv[i]);
         printf("%s: %s\n", t, argv[i] );
     }
 }
